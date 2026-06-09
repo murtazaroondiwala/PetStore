@@ -166,14 +166,14 @@ export interface components {
     schemas: {
         AddToCartRequest: {
             /** Format: int32 */
-            productId?: number;
+            productId: number;
             /** Format: int32 */
-            quantity?: number;
+            quantity: number;
         };
         CartDto: {
-            items?: components["schemas"]["CartItemDto"][] | null;
+            items: components["schemas"]["CartItemDto"][];
             /** Format: double */
-            grandTotal?: number;
+            grandTotal: number;
         };
         CartDtoApiResponse: {
             readonly success?: boolean;
@@ -182,14 +182,14 @@ export interface components {
         };
         CartItemDto: {
             /** Format: int32 */
-            productId?: number;
-            productName?: string | null;
+            productId: number;
+            productName: string;
             /** Format: double */
-            unitPrice?: number;
+            unitPrice: number;
             /** Format: int32 */
-            quantity?: number;
+            quantity: number;
             /** Format: double */
-            subtotal?: number;
+            subtotal: number;
         };
         ObjectApiResponse: {
             readonly success?: boolean;
@@ -198,11 +198,11 @@ export interface components {
         };
         ProductDto: {
             /** Format: int32 */
-            id?: number;
-            name?: string | null;
+            id: number;
+            name: string;
             /** Format: double */
-            price?: number;
-            category?: string | null;
+            price: number;
+            category: string;
         };
         ProductDtoIEnumerableApiResponse: {
             readonly success?: boolean;

@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PetStore.Api.DTOs;
 
 public class CartDto
 {
-    public List<CartItemDto> Items { get; set; } = new();
-    public decimal GrandTotal { get; set; }
+    [Required] public List<CartItemDto> Items { get; set; } = new();
+    [Required] public decimal GrandTotal { get; set; }
 }
