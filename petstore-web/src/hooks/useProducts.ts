@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { getProducts } from '../api/products.api';
-import { ApiError, type Product } from '../types/api.types';
+import { useEffect, useState } from "react";
+import { getProducts } from "../api/products.api";
+import { ApiError, type Product } from "../types/api.types";
 
 interface UseProductsResult {
   products: Product[];
@@ -16,7 +16,11 @@ export function useProducts(): UseProductsResult {
   useEffect(() => {
     getProducts()
       .then(setProducts)
-      .catch(err => setError(err instanceof ApiError ? err.message : 'Failed to load products.'))
+      .catch((err) =>
+        setError(
+          err instanceof ApiError ? err.message : "Failed to load products.",
+        ),
+      )
       .finally(() => setLoading(false));
   }, []);
 

@@ -1,8 +1,14 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { addToCart, getCart, removeFromCart } from '../api/cart.api';
-import { ApiError } from '../types/api.types';
-import type { Cart } from '../types/api.types';
-import { useToast } from './ToastContext';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { addToCart, getCart, removeFromCart } from "../api/cart.api";
+import { ApiError } from "../types/api.types";
+import type { Cart } from "../types/api.types";
+import { useToast } from "./ToastContext";
 
 interface CartContextValue {
   cart: Cart;
@@ -21,41 +27,58 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const { showError, showSuccess } = useToast();
 
   useEffect(() => {
-    getCart().then(setCart).catch(() => showError('Failed to load cart.'));
+    getCart()
+      .then(setCart)
+      .catch(() => showError("Failed to load cart."));
   }, []);
 
-  const addItem = useCallback(async (productId: number, quantity: number) => {
-    if (quantity <= 0) {
-      showError('Quantity must be greater than zero.');
-      return;
-    }
-    setLoading(true);
-    try {
-      const updated = await addToCart(productId, quantity);
-      setCart(updated);
-      showSuccess('Item added to cart.');
-    } catch (err) {
-      showError(err instanceof ApiError ? err.message : 'Failed to add item.');
-    } finally {
-      setLoading(false);
-    }
-  }, [showError, showSuccess]);
+  const addItem = useCallback(
+    async (productId: number, quantity: number) => {
+      if (quantity <= 0) {
+        showError("Quantity must be greater than zero.");
+        return;
+      }
+      setLoading(true);
+      try {
+        const updated = await addToCart(productId, quantity);
+        setCart(updated);
+        showSuccess("Item added to cart.");
+      } catch (err) {
+        showError(
+          err instanceof ApiError ? err.message : "Failed to add item.",
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [showError, showSuccess],
+  );
 
-  const removeItem = useCallback(async (productId: number) => {
-    setLoading(true);
-    try {
-      await removeFromCart(productId);
-      setCart(prev => {
-        const items = prev.items.filter(i => i.productId !== productId);
-        return { items, grandTotal: items.reduce((sum, i) => sum + i.subtotal, 0) };
-      });
-      showSuccess('Item removed from cart.');
-    } catch (err) {
-      showError(err instanceof ApiError ? err.message : 'Failed to remove item.');
-    } finally {
-      setLoading(false);
-    }
-  }, [showError, showSuccess]);
+  const removeItem = useCallback(
+    async (productId: number) => {
+      setLoading(true);
+      try {
+        await removeFromCart(productId);
+        setCart((prev) => {
+          const items = prev.items?.filter((i) => i.productId !== productId);
+          return {
+            items,
+            grandTotal: items
+              ? items.reduce((sum, i) => sum + i.subtotal, 0)
+              : 0,
+          };
+        });
+        showSuccess("Item removed from cart.");
+      } catch (err) {
+        showError(
+          err instanceof ApiError ? err.message : "Failed to remove item.",
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [showError, showSuccess],
+  );
 
   return (
     <CartContext.Provider value={{ cart, loading, addItem, removeItem }}>
@@ -66,6 +89,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
 export function useCart(): CartContextValue {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart must be used within CartProvider');
+  if (!ctx) throw new Error("useCart must be used within CartProvider");
   return ctx;
 }
