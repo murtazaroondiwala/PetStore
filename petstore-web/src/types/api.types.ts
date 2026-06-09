@@ -5,11 +5,11 @@ export interface ApiResponse<T> {
 }
 
 export class ApiError extends Error {
-  constructor(
-    public readonly message: string,
-    public readonly status: number
-  ) {
+  readonly status: number;
+
+  constructor(message: string, status: number) {
     super(message);
     this.name = 'ApiError';
+    this.status = status;
   }
 }

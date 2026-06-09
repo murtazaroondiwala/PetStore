@@ -6,6 +6,7 @@ using PetStore.Api.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<ICartRepository, CartRepository>();
@@ -20,6 +21,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors();
 app.MapControllers();
 

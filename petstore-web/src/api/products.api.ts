@@ -1,4 +1,4 @@
-import { Product } from "../types/product.types";
+import type { Product } from "../types/product.types";
 import { apiClient } from "./apiClient";
 
 export const getProducts = (): Promise<Product[]> =>
