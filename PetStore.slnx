@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PetStore.Api.Tests/PetStore.Api.Tests.csproj" />
+  <Project Path="PetStore.Api/PetStore.Api.csproj" />
+</Solution>
