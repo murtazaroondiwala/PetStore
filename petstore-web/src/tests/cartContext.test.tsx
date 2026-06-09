@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import * as cartApi from '../api/cart.api';
 import { CartProvider, useCart } from '../context/CartContext';
 import { ToastProvider } from '../context/ToastContext';
-import type { Cart } from '../types/cart.types';
+import type { Cart } from '../types/api.types';
 
 const emptyCart: Cart = { items: [], grandTotal: 0 };
 

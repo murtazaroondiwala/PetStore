@@ -1,4 +1,4 @@
-import type { Cart } from '../types/cart.types';
+import type { Cart } from '../types/api.types';
 import { apiClient } from './apiClient';
 
 export const getCart = (): Promise<Cart> =>

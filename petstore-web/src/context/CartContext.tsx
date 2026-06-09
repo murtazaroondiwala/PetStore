@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { addToCart, getCart, removeFromCart } from '../api/cart.api';
 import { ApiError } from '../types/api.types';
-import type { Cart } from '../types/cart.types';
+import type { Cart } from '../types/api.types';
 import { useToast } from './ToastContext';
 
 interface CartContextValue {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from '../api/products.api';
-import { ApiError } from '../types/api.types';
-import type { Product } from '../types/product.types';
+import { ApiError, type Product } from '../types/api.types';
 
 interface UseProductsResult {
   products: Product[];
