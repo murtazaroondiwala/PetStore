@@ -27,7 +27,7 @@ npm --version
 ## Project Structure
 
 ```
-MY_CODE/
+PetStore/
 ├── PetStore.Api/        # .NET 10 Web API (backend)
 └── petstore-web/        # React + TypeScript (frontend)
 ```
