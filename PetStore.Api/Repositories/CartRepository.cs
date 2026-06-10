@@ -5,8 +5,10 @@ namespace PetStore.Api.Repositories;
 
 public class CartRepository : ICartRepository
 {
-    private readonly Cart _cart = new();
+    private readonly Cart _cart = new() { Id = 1 };
     private readonly IProductRepository _productRepository;
+    private readonly List<Checkout> _checkouts = new();
+    private int _nextCheckoutId = 1;
 
     public CartRepository(IProductRepository productRepository)
     {
@@ -37,5 +39,33 @@ public class CartRepository : ICartRepository
         if (item is null) return false;
         _cart.Items.Remove(item);
         return true;
+    }
+
+    public Checkout Checkout()
+    {
+        var checkout = new Checkout
+        {
+            Id = _nextCheckoutId++,
+            CartId = _cart.Id,
+            Items = _cart.Items.Select(i => new CheckoutItem
+            {
+                ProductId = i.ProductId,
+                ProductName = i.Product.Name,
+                UnitPrice = i.Product.Price,
+                Quantity = i.Quantity,
+                Subtotal = i.Product.Price * i.Quantity
+            }).ToList(),
+            TotalAmount = _cart.Items.Sum(i => i.Product.Price * i.Quantity),
+            CheckoutDate = DateTime.UtcNow
+        };
+
+        _checkouts.Add(checkout);
+        ClearCart();
+        return checkout;
+    }
+
+    public void ClearCart()
+    {
+        _cart.Items.Clear();
     }
 }

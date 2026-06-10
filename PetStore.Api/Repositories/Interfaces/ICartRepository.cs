@@ -7,4 +7,6 @@ public interface ICartRepository
     Cart GetCart();
     void AddOrUpdateItem(int productId, int quantity);
     bool RemoveItem(int productId);
+    Checkout Checkout();
+    void ClearCart();
 }

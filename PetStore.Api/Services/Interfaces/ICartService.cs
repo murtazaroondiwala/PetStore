@@ -7,4 +7,5 @@ public interface ICartService
     CartDto GetCart();
     CartDto AddToCart(AddToCartRequest request);
     bool RemoveFromCart(int productId);
+    CheckoutDto Checkout();
 }

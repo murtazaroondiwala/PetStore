@@ -43,4 +43,18 @@ public class CartController : ControllerBase
 
         return Ok(ApiResponse<object>.Ok(null!));
     }
+
+    [HttpPost("checkout")]
+    public ActionResult<ApiResponse<CheckoutDto>> Checkout()
+    {
+        try
+        {
+            var checkout = _cartService.Checkout();
+            return Ok(ApiResponse<CheckoutDto>.Ok(checkout, "Order placed successfully!"));
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ApiResponse<CheckoutDto>.Fail(ex.Message));
+        }
+    }
 }

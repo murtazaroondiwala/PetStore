@@ -37,6 +37,30 @@ public class CartService : ICartService
         return _cartRepository.RemoveItem(productId);
     }
 
+    public CheckoutDto Checkout()
+    {
+        var cart = _cartRepository.GetCart();
+        if (cart.Items.Count == 0)
+            throw new InvalidOperationException("Cannot checkout an empty cart.");
+
+        var checkout = _cartRepository.Checkout();
+        return new CheckoutDto
+        {
+            Id = checkout.Id,
+            CartId = checkout.CartId,
+            Items = checkout.Items.Select(i => new CheckoutItemDto
+            {
+                ProductId = i.ProductId,
+                ProductName = i.ProductName,
+                UnitPrice = i.UnitPrice,
+                Quantity = i.Quantity,
+                Subtotal = i.Subtotal
+            }).ToList(),
+            TotalAmount = checkout.TotalAmount,
+            CheckoutDate = checkout.CheckoutDate
+        };
+    }
+
     private static CartDto MapToDto(List<CartItemDto> items) => new()
     {
         Items = items,
